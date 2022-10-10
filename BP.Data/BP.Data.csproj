@@ -7,6 +7,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20221010164747_InitialMigration.cs" />
     <Compile Remove="Migrations\20221010164747_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20221010175127_AddedWeightToDistanceToFrequencyRelationalTable.cs" />
+    <Compile Remove="Migrations\20221010175127_AddedWeightToDistanceToFrequencyRelationalTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

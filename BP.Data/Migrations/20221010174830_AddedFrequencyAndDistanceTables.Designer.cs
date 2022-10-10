@@ -4,14 +4,16 @@ using BP.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BP.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221010174830_AddedFrequencyAndDistanceTables")]
+    partial class AddedFrequencyAndDistanceTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,54 +103,6 @@ namespace BP.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Weights");
-                });
-
-            modelBuilder.Entity("BP.Core.Entities.WeightToDistanceToFrequency", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DistanceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FrequencyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WeightId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DistanceId");
-
-                    b.HasIndex("FrequencyId");
-
-                    b.HasIndex("WeightId");
-
-                    b.ToTable("WeightToDistanceToFrequencies");
-                });
-
-            modelBuilder.Entity("BP.Core.Entities.WeightToDistanceToFrequency", b =>
-                {
-                    b.HasOne("BP.Core.Entities.Distance", null)
-                        .WithMany("WeightToDistanceToFrequencies")
-                        .HasForeignKey("DistanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BP.Core.Entities.Frequency", null)
-                        .WithMany("WeightToDistanceToFrequencies")
-                        .HasForeignKey("FrequencyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BP.Core.Entities.Weight", null)
-                        .WithMany("WeightToDistanceToFrequencies")
-                        .HasForeignKey("WeightId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

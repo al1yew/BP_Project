@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BP.Core.Entities
 {
-    public class Weight : BaseEntity
+    public class Frequency : BaseEntity
     {
         public string Name { get; set; }
 

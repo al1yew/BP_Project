@@ -5,8 +5,7 @@ using System.Text;
 
 namespace BP.Core.Repositories
 {
-    public interface IWeightRepository : IRepository<Weight>
+    public interface IDistanceRepository : IRepository<Distance>
     {
-
     }
 }
