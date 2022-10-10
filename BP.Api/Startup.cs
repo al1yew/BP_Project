@@ -1,5 +1,6 @@
 using BP.Api.Extensions;
 using BP.Data;
+using BP.Service.Mappings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,9 +33,12 @@ namespace BP.Api
 
             services.FluentValidatorBuilder();
 
-            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            //services.IdentityBuilder();
 
-            services.IdentityBuilder();
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("Default"));
+            });
 
             services.AddAutoMapper(options =>
             {
@@ -41,13 +46,6 @@ namespace BP.Api
             });
 
             services.ServicesBuilder();
-
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-            });
-
-            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -57,19 +55,18 @@ namespace BP.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.ExceptionHandling();
-
-            app.UseSession();
+            app.ExceptionHandling();
 
             app.UseRouting();
 
-            app.UseStaticFiles();
+            //app.UseAuthentication();
 
-            app.UseAuthentication();
+            //app.UseAuthorization();
 
-            app.UseAuthorization();
-
-            app.EndpointBuilder();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

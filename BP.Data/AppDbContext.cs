@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BP.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,6 +18,7 @@ namespace BP.Data
             base.OnModelCreating(modelBuilder);
         }
 
+        public DbSet<Weight> Weights { get; set; }
 
     }
 }

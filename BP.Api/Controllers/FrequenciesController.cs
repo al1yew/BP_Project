@@ -8,12 +8,11 @@ namespace BP.Api.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
-    public class WeightsController : ControllerBase
+    public class FrequenciesController : ControllerBase
     {
-        [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Content("Salammmm");
+            return Content("dnshfbdskj");
         }
     }
 }
