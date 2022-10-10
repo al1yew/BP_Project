@@ -26,7 +26,7 @@ namespace BP.Api
         {
             services.AddControllers().AddNewtonsoftJson(options =>
             {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; 
             });
 
             services.FluentValidatorBuilder();
