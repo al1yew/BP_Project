@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BP.Service.DTOs.WeightDTOs
+namespace BP.Service.DTOs.DistanceDTOs
 {
-    public class WeightListDTO
+    public class DistanceListDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

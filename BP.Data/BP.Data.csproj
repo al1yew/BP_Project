@@ -7,8 +7,16 @@
   <ItemGroup>
     <Compile Remove="Migrations\20221010164747_InitialMigration.cs" />
     <Compile Remove="Migrations\20221010164747_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20221010165239_AddedWeightTable.cs" />
+    <Compile Remove="Migrations\20221010165239_AddedWeightTable.Designer.cs" />
+    <Compile Remove="Migrations\20221010174830_AddedFrequencyAndDistanceTables.cs" />
+    <Compile Remove="Migrations\20221010174830_AddedFrequencyAndDistanceTables.Designer.cs" />
     <Compile Remove="Migrations\20221010175127_AddedWeightToDistanceToFrequencyRelationalTable.cs" />
     <Compile Remove="Migrations\20221010175127_AddedWeightToDistanceToFrequencyRelationalTable.Designer.cs" />
+    <Compile Remove="Migrations\20221010175358_AddedWeightToDistanceToFrequencyRelationalTable.cs" />
+    <Compile Remove="Migrations\20221010175358_AddedWeightToDistanceToFrequencyRelationalTable.Designer.cs" />
+    <Compile Remove="Migrations\20221011125943_UpdatedTables.cs" />
+    <Compile Remove="Migrations\20221011125943_UpdatedTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -32,7 +32,7 @@ namespace BP.Data.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsUpdated")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -60,7 +60,7 @@ namespace BP.Data.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsUpdated")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -88,7 +88,7 @@ namespace BP.Data.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsUpdated")
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -116,6 +116,9 @@ namespace BP.Data.Migrations
                     b.Property<int>("FrequencyId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("NeedToAssess")
+                        .HasColumnType("bit");
+
                     b.Property<int>("WeightId")
                         .HasColumnType("int");
 
@@ -132,19 +135,19 @@ namespace BP.Data.Migrations
 
             modelBuilder.Entity("BP.Core.Entities.WeightToDistanceToFrequency", b =>
                 {
-                    b.HasOne("BP.Core.Entities.Distance", null)
+                    b.HasOne("BP.Core.Entities.Distance", "Distance")
                         .WithMany("WeightToDistanceToFrequencies")
                         .HasForeignKey("DistanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BP.Core.Entities.Frequency", null)
+                    b.HasOne("BP.Core.Entities.Frequency", "Frequency")
                         .WithMany("WeightToDistanceToFrequencies")
                         .HasForeignKey("FrequencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BP.Core.Entities.Weight", null)
+                    b.HasOne("BP.Core.Entities.Weight", "Weight")
                         .WithMany("WeightToDistanceToFrequencies")
                         .HasForeignKey("WeightId")
                         .OnDelete(DeleteBehavior.Cascade)

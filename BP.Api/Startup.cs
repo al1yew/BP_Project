@@ -26,9 +26,18 @@ namespace BP.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "BP_RISK_ASSESSMENT",
+                    policy =>
+                    {
+                        policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                    });
+            });
+
             services.AddControllers().AddNewtonsoftJson(options =>
             {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; 
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
             services.FluentValidatorBuilder();
@@ -55,9 +64,11 @@ namespace BP.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.ExceptionHandling();
+            //app.ExceptionHandling();
 
             app.UseRouting();
+
+            app.UseCors("BP_RISK_ASSESSMENT");
 
             //app.UseAuthentication();
 
