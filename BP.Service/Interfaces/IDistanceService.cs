@@ -12,9 +12,9 @@ namespace BP.Service.Interfaces
 
         Task<DistanceGetDTO> GetById(int? id);
 
-        Task CreateAsync(DistancePostDTO DistancePostDTO);
+        Task CreateAsync(DistancePostDTO distancePostDTO);
 
-        Task UpdateAsync(int? id, DistancePutDTO DistancePutDTO);
+        Task UpdateAsync(int? id, DistancePutDTO distancePutDTO);
 
         Task DeleteAsync(int? id);
 

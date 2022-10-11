@@ -16,6 +16,8 @@ namespace BP.Api.Extensions
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IWeightService, WeightService>();
+            services.AddScoped<IDistanceService, DistanceService>();
+            services.AddScoped<IFrequencyService, FrequencyService>();
         }
     }
 }

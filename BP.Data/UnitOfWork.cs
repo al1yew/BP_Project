@@ -11,6 +11,8 @@ namespace BP.Data
     public class UnitOfWork : IUnitOfWork
     {
         private readonly WeightRepository _weightRepository;
+        private readonly DistanceRepository _distanceRepository;
+        private readonly FrequencyRepository _frequencyRepository;
         private readonly AppDbContext _context;
 
         public UnitOfWork(AppDbContext context)
@@ -19,6 +21,8 @@ namespace BP.Data
         }
 
         public IWeightRepository WeightRepository => _weightRepository != null ? _weightRepository : new WeightRepository(_context);
+        public IDistanceRepository DistanceRepository => _distanceRepository != null ? _distanceRepository : new DistanceRepository(_context);
+        public IFrequencyRepository FrequencyRepository => _frequencyRepository != null ? _frequencyRepository : new FrequencyRepository(_context);
 
 
 

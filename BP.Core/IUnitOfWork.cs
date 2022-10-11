@@ -9,6 +9,8 @@ namespace BP.Core
     public interface IUnitOfWork
     {
         IWeightRepository WeightRepository { get; }
+        IDistanceRepository DistanceRepository { get; }
+        IFrequencyRepository FrequencyRepository { get; }
         Task<int> CommitAsync();
         int Commit();
     }
