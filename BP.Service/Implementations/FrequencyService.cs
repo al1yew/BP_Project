@@ -77,31 +77,20 @@ namespace BP.Service.Implementations
             if (id == null)
                 throw new BadRequestException($"Id is null!");
 
-            Frequency dbFrequency = await _unitOfWork.FrequencyRepository.GetAsync(c => c.Id == id && !c.IsDeleted);
+            Frequency dbFrequency = await _unitOfWork.FrequencyRepository.GetAsync(c => c.Id == id);
 
             if (dbFrequency == null)
                 throw new NotFoundException($"Frequency Cannot be found By id = {id}");
 
-            dbFrequency.IsDeleted = true;
-            dbFrequency.DeletedAt = DateTime.UtcNow.AddHours(4);
+            _unitOfWork.FrequencyRepository.Remove(dbFrequency);
+
+            foreach (var item in await _unitOfWork.AssessmentRepository.GetAllByExAsync(x => x.FrequencyId == id))
+            {
+                _unitOfWork.AssessmentRepository.Remove(item);
+            }
 
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task RestoreAsync(int? id)
-        {
-            if (id == null)
-                throw new BadRequestException($"Id is null!");
-
-            Frequency dbFrequency = await _unitOfWork.FrequencyRepository.GetAsync(c => c.Id == id && c.IsDeleted);
-
-            if (dbFrequency == null)
-                throw new NotFoundException($"Frequency Cannot be found By id = {id}");
-
-            dbFrequency.IsDeleted = false;
-            dbFrequency.DeletedAt = null;
-
-            await _unitOfWork.CommitAsync();
-        }
     }
 }

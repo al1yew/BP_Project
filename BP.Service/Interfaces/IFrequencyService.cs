@@ -18,6 +18,5 @@ namespace BP.Service.Interfaces
 
         Task DeleteAsync(int? id);
 
-        Task RestoreAsync(int? id);
     }
 }

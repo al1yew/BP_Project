@@ -57,14 +57,5 @@ namespace BP.Api.Controllers
 
             return Ok();
         }
-
-        [HttpPatch]
-        [Route("restore/{id?}")]
-        public async Task<IActionResult> Restore(int? id)
-        {
-            await _frequencyService.RestoreAsync(id);
-
-            return Ok();
-        }
     }
 }

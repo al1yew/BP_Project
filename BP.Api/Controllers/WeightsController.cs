@@ -59,14 +59,5 @@ namespace BP.Api.Controllers
             return Ok();
         }
 
-        [HttpPatch]
-        [Route("restore/{id?}")]
-        public async Task<IActionResult> Restore(int? id)
-        {
-            await _weightService.RestoreAsync(id);
-
-            return Ok();
-        }
-
     }
 }

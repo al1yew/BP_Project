@@ -78,29 +78,17 @@ namespace BP.Service.Implementations
             if (id == null)
                 throw new BadRequestException($"Id is null!");
 
-            Distance dbDistance = await _unitOfWork.DistanceRepository.GetAsync(c => c.Id == id && !c.IsDeleted);
+            Distance dbDistance = await _unitOfWork.DistanceRepository.GetAsync(c => c.Id == id);
 
             if (dbDistance == null)
                 throw new NotFoundException($"Distance Cannot be found By id = {id}");
 
-            dbDistance.IsDeleted = true;
-            dbDistance.DeletedAt = DateTime.UtcNow.AddHours(4);
+            _unitOfWork.DistanceRepository.Remove(dbDistance);
 
-            await _unitOfWork.CommitAsync();
-        }
-
-        public async Task RestoreAsync(int? id)
-        {
-            if (id == null)
-                throw new BadRequestException($"Id is null!");
-
-            Distance dbDistance = await _unitOfWork.DistanceRepository.GetAsync(c => c.Id == id && c.IsDeleted);
-
-            if (dbDistance == null)
-                throw new NotFoundException($"Distance Cannot be found By id = {id}");
-
-            dbDistance.IsDeleted = false;
-            dbDistance.DeletedAt = null;
+            foreach (var item in await _unitOfWork.AssessmentRepository.GetAllByExAsync(x => x.DistanceId == id))
+            {
+                _unitOfWork.AssessmentRepository.Remove(item);
+            }
 
             await _unitOfWork.CommitAsync();
         }

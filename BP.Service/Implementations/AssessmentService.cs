@@ -24,12 +24,12 @@ namespace BP.Service.Implementations
 
         public async Task<List<AssessmentListDTO>> GetAllAsync()
         {
-            return _mapper.Map<List<AssessmentListDTO>>(await _unitOfWork.AssessmentRepository.GetAllAsync());
+            return _mapper.Map<List<AssessmentListDTO>>(await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
         }
 
         public async Task<AssessmentGetDTO> GetById(int? id)
         {
-            Assessment assessment = await _unitOfWork.AssessmentRepository.GetAsync(x => x.Id == id);
+            Assessment assessment = await _unitOfWork.AssessmentRepository.GetAsync(x => x.Id == id, "Weight", "Distance", "Frequency");
 
             if (assessment == null)
                 throw new NotFoundException($"Assessment cannot be found by id = {id}");

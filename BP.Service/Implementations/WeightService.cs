@@ -78,31 +78,20 @@ namespace BP.Service.Implementations
             if (id == null)
                 throw new BadRequestException($"Id is null!");
 
-            Weight dbWeight = await _unitOfWork.WeightRepository.GetAsync(c => c.Id == id && !c.IsDeleted);
+            Weight dbWeight = await _unitOfWork.WeightRepository.GetAsync(c => c.Id == id);
 
             if (dbWeight == null)
                 throw new NotFoundException($"Weight Cannot be found By id = {id}");
 
-            dbWeight.IsDeleted = true;
-            dbWeight.DeletedAt = DateTime.UtcNow.AddHours(4);
+            _unitOfWork.WeightRepository.Remove(dbWeight);
+
+            foreach (var item in await _unitOfWork.AssessmentRepository.GetAllByExAsync(x => x.WeightId == id))
+            {
+                _unitOfWork.AssessmentRepository.Remove(item);
+            }
 
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task RestoreAsync(int? id)
-        {
-            if (id == null)
-                throw new BadRequestException($"Id is null!");
-
-            Weight dbWeight = await _unitOfWork.WeightRepository.GetAsync(c => c.Id == id && c.IsDeleted);
-
-            if (dbWeight == null)
-                throw new NotFoundException($"Weight Cannot be found By id = {id}");
-
-            dbWeight.IsDeleted = false;
-            dbWeight.DeletedAt = null;
-
-            await _unitOfWork.CommitAsync();
-        }
     }
 }
