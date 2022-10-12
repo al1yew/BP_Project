@@ -21,7 +21,7 @@ namespace BP.Data
         public DbSet<Weight> Weights { get; set; }
         public DbSet<Distance> Distances { get; set; }
         public DbSet<Frequency> Frequencies { get; set; }
-        public DbSet<WeightToDistanceToFrequency> WeightToDistanceToFrequencies { get; set; }
+        public DbSet<Assessment> Assessments { get; set; }
 
     }
 }

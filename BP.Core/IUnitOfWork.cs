@@ -11,6 +11,7 @@ namespace BP.Core
         IWeightRepository WeightRepository { get; }
         IDistanceRepository DistanceRepository { get; }
         IFrequencyRepository FrequencyRepository { get; }
+        IAssessmentRepository AssessmentRepository { get; }
         Task<int> CommitAsync();
         int Commit();
     }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BP.Core.Entities
 {
-    public class WeightToDistanceToFrequency
+    public class Assessment
     {
         public int Id { get; set; }
         public Weight Weight { get; set; }

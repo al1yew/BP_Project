@@ -19,6 +19,36 @@ namespace BP.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BP.Core.Entities.Assessment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DistanceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FrequencyId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("NeedToAssess")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("WeightId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DistanceId");
+
+                    b.HasIndex("FrequencyId");
+
+                    b.HasIndex("WeightId");
+
+                    b.ToTable("Assessments");
+                });
+
             modelBuilder.Entity("BP.Core.Entities.Distance", b =>
                 {
                     b.Property<int>("Id")
@@ -103,52 +133,22 @@ namespace BP.Data.Migrations
                     b.ToTable("Weights");
                 });
 
-            modelBuilder.Entity("BP.Core.Entities.WeightToDistanceToFrequency", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DistanceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FrequencyId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("NeedToAssess")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("WeightId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DistanceId");
-
-                    b.HasIndex("FrequencyId");
-
-                    b.HasIndex("WeightId");
-
-                    b.ToTable("WeightToDistanceToFrequencies");
-                });
-
-            modelBuilder.Entity("BP.Core.Entities.WeightToDistanceToFrequency", b =>
+            modelBuilder.Entity("BP.Core.Entities.Assessment", b =>
                 {
                     b.HasOne("BP.Core.Entities.Distance", "Distance")
-                        .WithMany("WeightToDistanceToFrequencies")
+                        .WithMany("Assessments")
                         .HasForeignKey("DistanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BP.Core.Entities.Frequency", "Frequency")
-                        .WithMany("WeightToDistanceToFrequencies")
+                        .WithMany("Assessments")
                         .HasForeignKey("FrequencyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BP.Core.Entities.Weight", "Weight")
-                        .WithMany("WeightToDistanceToFrequencies")
+                        .WithMany("Assessments")
                         .HasForeignKey("WeightId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -18,6 +18,7 @@ namespace BP.Api.Extensions
             services.AddScoped<IWeightService, WeightService>();
             services.AddScoped<IDistanceService, DistanceService>();
             services.AddScoped<IFrequencyService, FrequencyService>();
+            services.AddScoped<IAssessmentService, AssessmentService>();
         }
     }
 }

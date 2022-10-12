@@ -17,6 +17,8 @@
     <Compile Remove="Migrations\20221010175358_AddedWeightToDistanceToFrequencyRelationalTable.Designer.cs" />
     <Compile Remove="Migrations\20221011125943_UpdatedTables.cs" />
     <Compile Remove="Migrations\20221011125943_UpdatedTables.Designer.cs" />
+    <Compile Remove="Migrations\20221011135212_AddedTables.cs" />
+    <Compile Remove="Migrations\20221011135212_AddedTables.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -65,7 +65,7 @@ namespace BP.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WeightToDistanceToFrequencies",
+                name: "Assessments",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -77,21 +77,21 @@ namespace BP.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WeightToDistanceToFrequencies", x => x.Id);
+                    table.PrimaryKey("PK_Assessments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WeightToDistanceToFrequencies_Distances_DistanceId",
+                        name: "FK_Assessments_Distances_DistanceId",
                         column: x => x.DistanceId,
                         principalTable: "Distances",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_WeightToDistanceToFrequencies_Frequencies_FrequencyId",
+                        name: "FK_Assessments_Frequencies_FrequencyId",
                         column: x => x.FrequencyId,
                         principalTable: "Frequencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_WeightToDistanceToFrequencies_Weights_WeightId",
+                        name: "FK_Assessments_Weights_WeightId",
                         column: x => x.WeightId,
                         principalTable: "Weights",
                         principalColumn: "Id",
@@ -99,25 +99,25 @@ namespace BP.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_WeightToDistanceToFrequencies_DistanceId",
-                table: "WeightToDistanceToFrequencies",
+                name: "IX_Assessments_DistanceId",
+                table: "Assessments",
                 column: "DistanceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WeightToDistanceToFrequencies_FrequencyId",
-                table: "WeightToDistanceToFrequencies",
+                name: "IX_Assessments_FrequencyId",
+                table: "Assessments",
                 column: "FrequencyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_WeightToDistanceToFrequencies_WeightId",
-                table: "WeightToDistanceToFrequencies",
+                name: "IX_Assessments_WeightId",
+                table: "Assessments",
                 column: "WeightId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "WeightToDistanceToFrequencies");
+                name: "Assessments");
 
             migrationBuilder.DropTable(
                 name: "Distances");

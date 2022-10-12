@@ -9,6 +9,6 @@ namespace BP.Core.Entities
         public string Name { get; set; }
 
         //relations
-        public List<WeightToDistanceToFrequency> WeightToDistanceToFrequencies { get; set; }
+        public List<Assessment> Assessments { get; set; }
     }
 }

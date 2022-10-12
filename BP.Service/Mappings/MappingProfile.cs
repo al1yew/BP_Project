@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BP.Core.Entities;
+using BP.Service.DTOs.AssessmentDTOs;
 using BP.Service.DTOs.DistanceDTOs;
 using BP.Service.DTOs.FrequencyDTOs;
 using BP.Service.DTOs.WeightDTOs;
@@ -43,6 +44,22 @@ namespace BP.Service.Mappings
             CreateMap<Frequency, FrequencyListDTO>();
 
             CreateMap<Frequency, FrequencyGetDTO>();
+
+            #endregion
+
+            #region Assessment
+
+            CreateMap<AssessmentPostDTO, Assessment>();
+
+            CreateMap<Assessment, AssessmentListDTO>()
+                .ForPath(des => des.Distance, src => src.MapFrom(x => x.Distance))
+                .ForPath(des => des.Weight, src => src.MapFrom(x => x.Weight))
+                .ForPath(des => des.Frequency, src => src.MapFrom(x => x.Frequency));
+
+            CreateMap<Assessment, AssessmentGetDTO>()
+                .ForPath(des => des.Distance, src => src.MapFrom(x => x.Distance))
+                .ForPath(des => des.Weight, src => src.MapFrom(x => x.Weight))
+                .ForPath(des => des.Frequency, src => src.MapFrom(x => x.Frequency));
 
             #endregion
         }
