@@ -10,11 +10,11 @@ namespace BP.Api.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
-    public class AssessmentController : ControllerBase
+    public class AssessmentsController : ControllerBase
     {
         private readonly IAssessmentService _assessmentService;
 
-        public AssessmentController(IAssessmentService assessmentService)
+        public AssessmentsController(IAssessmentService assessmentService)
         {
             _assessmentService = assessmentService;
         }

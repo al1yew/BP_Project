@@ -16,5 +16,7 @@ namespace BP.Service.DTOs.AssessmentDTOs
         public int FrequencyId { get; set; }
         public DistanceGetDTO Distance { get; set; }
         public int DistanceId { get; set; }
+        public bool NeedToAssess { get; set; }
+
     }
 }
