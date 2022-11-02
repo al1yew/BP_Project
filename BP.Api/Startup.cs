@@ -64,7 +64,7 @@ namespace BP.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.ExceptionHandling();
+            app.ExceptionHandling();
 
             app.UseRouting();
 
