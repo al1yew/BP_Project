@@ -32,6 +32,13 @@ namespace BP.Api.Controllers
             return Ok(await _assessmentService.GetById(id));
         }
 
+        [HttpGet]
+        [Route("getalldata")]
+        public async Task<IActionResult> GetAllData()
+        {
+            return Ok(await _assessmentService.GetAllData());
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(AssessmentPostDTO assessmentPostDTO)
         {
@@ -55,7 +62,7 @@ namespace BP.Api.Controllers
         {
             await _assessmentService.DeleteAsync(id);
 
-            return Ok();
+            return Ok(await _assessmentService.GetAllAsync());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BP.Service.DTOs.AssessmentDTOs;
+﻿using BP.Service.DTOs;
+using BP.Service.DTOs.AssessmentDTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,8 @@ namespace BP.Service.Interfaces
         Task<List<AssessmentListDTO>> GetAllAsync();
 
         Task<AssessmentGetDTO> GetById(int? id);
+
+        Task<AllDataDTO> GetAllData();
 
         Task CreateAsync(AssessmentPostDTO assessmentPostDTO);
 

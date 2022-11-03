@@ -12,7 +12,7 @@ namespace BP.Service.DTOs.AssessmentDTOs
         public int Id { get; set; }
         public WeightGetDTO Weight { get; set; }
         public int WeightId { get; set; }
-        public FrequencyGetDTO Frequency { get; set; }
+        public FrequencyGetDTO Frequency { get; set; } 
         public int FrequencyId { get; set; }
         public DistanceGetDTO Distance { get; set; }
         public int DistanceId { get; set; }

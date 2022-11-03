@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using BP.Core;
 using BP.Core.Entities;
+using BP.Service.DTOs;
 using BP.Service.DTOs.AssessmentDTOs;
+using BP.Service.DTOs.DistanceDTOs;
+using BP.Service.DTOs.FrequencyDTOs;
+using BP.Service.DTOs.WeightDTOs;
 using BP.Service.Exceptions;
 using BP.Service.Interfaces;
 using System;
@@ -35,6 +39,16 @@ namespace BP.Service.Implementations
                 throw new NotFoundException($"Assessment cannot be found by id = {id}");
 
             return _mapper.Map<AssessmentGetDTO>(assessment);
+        }
+
+        public async Task<AllDataDTO> GetAllData()
+        {
+            return new AllDataDTO()
+            {
+                Distances = _mapper.Map<List<DistanceListDTO>>(await _unitOfWork.DistanceRepository.GetAllByExAsync(x => !x.IsDeleted)),
+                Weights = _mapper.Map<List<WeightListDTO>>(await _unitOfWork.WeightRepository.GetAllByExAsync(x => !x.IsDeleted)),
+                Frequencies = _mapper.Map<List<FrequencyListDTO>>(await _unitOfWork.FrequencyRepository.GetAllByExAsync(x => !x.IsDeleted))
+            };
         }
 
         public async Task CreateAsync(AssessmentPostDTO assessmentPostDTO)
