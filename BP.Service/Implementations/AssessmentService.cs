@@ -8,8 +8,10 @@ using BP.Service.DTOs.FrequencyDTOs;
 using BP.Service.DTOs.WeightDTOs;
 using BP.Service.Exceptions;
 using BP.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,6 +51,41 @@ namespace BP.Service.Implementations
                 Weights = _mapper.Map<List<WeightListDTO>>(await _unitOfWork.WeightRepository.GetAllByExAsync(x => !x.IsDeleted)),
                 Frequencies = _mapper.Map<List<FrequencyListDTO>>(await _unitOfWork.FrequencyRepository.GetAllByExAsync(x => !x.IsDeleted))
             };
+        }
+
+        public async Task<IQueryable<AssessmentListDTO>> Sort(SortDTO sortDTO)
+        {
+            List<AssessmentListDTO> assessments = _mapper.Map<List<AssessmentListDTO>>(await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
+
+            IQueryable<AssessmentListDTO> query = assessments.AsQueryable();
+
+            if (sortDTO == null) return query;
+
+            if (sortDTO.WeightId > 0)
+            {
+                query = query.Where(x => x.WeightId == sortDTO.WeightId);
+            }
+
+            if (sortDTO.DistanceId > 0)
+            {
+                query = query.Where(x => x.DistanceId == sortDTO.DistanceId);
+            }
+
+            if (sortDTO.FrequencyId > 0)
+            {
+                query = query.Where(x => x.FrequencyId == sortDTO.FrequencyId);
+            }
+
+            if (sortDTO.NeedToAssess == 1)
+            {
+                query = query.Where(x => x.NeedToAssess);
+            }
+            else if (sortDTO.NeedToAssess == 2)
+            {
+                query = query.Where(x => !x.NeedToAssess);
+            }
+
+            return query;
         }
 
         public async Task CreateAsync(AssessmentPostDTO assessmentPostDTO)

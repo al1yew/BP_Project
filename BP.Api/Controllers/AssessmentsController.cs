@@ -1,4 +1,5 @@
-﻿using BP.Service.DTOs.AssessmentDTOs;
+﻿using BP.Service.DTOs;
+using BP.Service.DTOs.AssessmentDTOs;
 using BP.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -37,6 +38,13 @@ namespace BP.Api.Controllers
         public async Task<IActionResult> GetAllData()
         {
             return Ok(await _assessmentService.GetAllData());
+        }
+
+        [HttpPost]
+        [Route("sortdata")]
+        public async Task<IActionResult> SortData(SortDTO sortDTO)
+        {
+            return Ok(await _assessmentService.Sort(sortDTO));
         }
 
         [HttpPost]
