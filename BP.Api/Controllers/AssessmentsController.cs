@@ -21,9 +21,9 @@ namespace BP.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] SortDTO sortDTO)
         {
-            return Ok(await _assessmentService.GetAllAsync());
+            return Ok(await _assessmentService.Get(sortDTO));
         }
 
         [HttpGet]
@@ -38,13 +38,6 @@ namespace BP.Api.Controllers
         public async Task<IActionResult> GetAllData()
         {
             return Ok(await _assessmentService.GetAllData());
-        }
-
-        [HttpPost]
-        [Route("sortdata")]
-        public async Task<IActionResult> SortData(SortDTO sortDTO)
-        {
-            return Ok(await _assessmentService.Sort(sortDTO));
         }
 
         [HttpPost]
@@ -70,7 +63,7 @@ namespace BP.Api.Controllers
         {
             await _assessmentService.DeleteAsync(id);
 
-            return Ok(await _assessmentService.GetAllAsync());
+            return Ok(await _assessmentService.Get(new SortDTO()));
         }
     }
 }

@@ -55,7 +55,7 @@ namespace BP.Api.Controllers
         {
             await _distanceService.DeleteAsync(id);
 
-            return Ok();
+            return Ok(await _distanceService.GetAllAsync());
         }
     }
 }

@@ -10,13 +10,12 @@ namespace BP.Service.Interfaces
 {
     public interface IAssessmentService
     {
-        Task<List<AssessmentListDTO>> GetAllAsync();
 
         Task<AssessmentGetDTO> GetById(int? id);
 
         Task<AllDataDTO> GetAllData();
 
-        Task<IQueryable<AssessmentListDTO>> Sort(SortDTO sortDTO);
+        Task<IQueryable<AssessmentListDTO>> Get(SortDTO sortDTO);
 
         Task CreateAsync(AssessmentPostDTO assessmentPostDTO);
 

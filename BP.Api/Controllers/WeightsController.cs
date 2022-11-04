@@ -56,7 +56,7 @@ namespace BP.Api.Controllers
         {
             await _weightService.DeleteAsync(id);
 
-            return Ok();
+            return Ok(await _weightService.GetAllAsync());
         }
 
     }

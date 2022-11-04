@@ -55,7 +55,7 @@ namespace BP.Api.Controllers
         {
             await _frequencyService.DeleteAsync(id);
 
-            return Ok();
+            return Ok(await _frequencyService.GetAllAsync());
         }
     }
 }

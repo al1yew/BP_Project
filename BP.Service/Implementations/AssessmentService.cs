@@ -28,32 +28,7 @@ namespace BP.Service.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<AssessmentListDTO>> GetAllAsync()
-        {
-            return _mapper.Map<List<AssessmentListDTO>>(await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
-        }
-
-        public async Task<AssessmentGetDTO> GetById(int? id)
-        {
-            Assessment assessment = await _unitOfWork.AssessmentRepository.GetAsync(x => x.Id == id, "Weight", "Distance", "Frequency");
-
-            if (assessment == null)
-                throw new NotFoundException($"Assessment cannot be found by id = {id}");
-
-            return _mapper.Map<AssessmentGetDTO>(assessment);
-        }
-
-        public async Task<AllDataDTO> GetAllData()
-        {
-            return new AllDataDTO()
-            {
-                Distances = _mapper.Map<List<DistanceListDTO>>(await _unitOfWork.DistanceRepository.GetAllByExAsync(x => !x.IsDeleted)),
-                Weights = _mapper.Map<List<WeightListDTO>>(await _unitOfWork.WeightRepository.GetAllByExAsync(x => !x.IsDeleted)),
-                Frequencies = _mapper.Map<List<FrequencyListDTO>>(await _unitOfWork.FrequencyRepository.GetAllByExAsync(x => !x.IsDeleted))
-            };
-        }
-
-        public async Task<IQueryable<AssessmentListDTO>> Sort(SortDTO sortDTO)
+        public async Task<IQueryable<AssessmentListDTO>> Get(SortDTO sortDTO)
         {
             List<AssessmentListDTO> assessments = _mapper.Map<List<AssessmentListDTO>>(await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
 
@@ -86,6 +61,26 @@ namespace BP.Service.Implementations
             }
 
             return query;
+        }
+
+        public async Task<AssessmentGetDTO> GetById(int? id)
+        {
+            Assessment assessment = await _unitOfWork.AssessmentRepository.GetAsync(x => x.Id == id, "Weight", "Distance", "Frequency");
+
+            if (assessment == null)
+                throw new NotFoundException($"Assessment cannot be found by id = {id}");
+
+            return _mapper.Map<AssessmentGetDTO>(assessment);
+        }
+
+        public async Task<AllDataDTO> GetAllData()
+        {
+            return new AllDataDTO()
+            {
+                Distances = _mapper.Map<List<DistanceListDTO>>(await _unitOfWork.DistanceRepository.GetAllByExAsync(x => !x.IsDeleted)),
+                Weights = _mapper.Map<List<WeightListDTO>>(await _unitOfWork.WeightRepository.GetAllByExAsync(x => !x.IsDeleted)),
+                Frequencies = _mapper.Map<List<FrequencyListDTO>>(await _unitOfWork.FrequencyRepository.GetAllByExAsync(x => !x.IsDeleted))
+            };
         }
 
         public async Task CreateAsync(AssessmentPostDTO assessmentPostDTO)

@@ -7,7 +7,6 @@ namespace BP.Service.DTOs.FrequencyDTOs
 {
     public class FrequencyPostDTO
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
     public class FrequencyPostDTOValidator : AbstractValidator<FrequencyPostDTO>
