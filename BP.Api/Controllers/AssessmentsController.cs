@@ -59,11 +59,11 @@ namespace BP.Api.Controllers
 
         [HttpDelete]
         [Route("{id?}")]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, [FromQuery] SortDTO sortDTO)
         {
             await _assessmentService.DeleteAsync(id);
 
-            return Ok(await _assessmentService.Get(new SortDTO()));
+            return Ok(await _assessmentService.Get(sortDTO));
         }
     }
 }
