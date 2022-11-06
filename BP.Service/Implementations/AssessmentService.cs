@@ -28,13 +28,11 @@ namespace BP.Service.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IQueryable<AssessmentListDTO>> Get(SortDTO sortDTO)
+        public async Task<AssessmentObjectDTO> Get(SortDTO sortDTO)
         {
             List<AssessmentListDTO> assessments = _mapper.Map<List<AssessmentListDTO>>(await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
 
             IQueryable<AssessmentListDTO> query = assessments.AsQueryable();
-
-            if (sortDTO == null) return query;
 
             if (sortDTO.WeightId > 0)
             {
@@ -60,7 +58,21 @@ namespace BP.Service.Implementations
                 query = query.Where(x => !x.NeedToAssess);
             }
 
-            return query;
+            if (sortDTO.Page == 0)
+            {
+                sortDTO.Page = 1;
+            }
+
+            if (sortDTO.ShowCount == 0)
+            {
+                sortDTO.ShowCount = 10;
+            }
+
+            return new AssessmentObjectDTO()
+            {
+                Query = query.Skip((sortDTO.Page * sortDTO.ShowCount) - sortDTO.ShowCount).Take(sortDTO.ShowCount),
+                TotalCount = query.Count()
+            };
         }
 
         public async Task<AssessmentGetDTO> GetById(int? id)
@@ -79,7 +91,7 @@ namespace BP.Service.Implementations
             {
                 Distances = _mapper.Map<List<DistanceListDTO>>(await _unitOfWork.DistanceRepository.GetAllByExAsync(x => !x.IsDeleted)),
                 Weights = _mapper.Map<List<WeightListDTO>>(await _unitOfWork.WeightRepository.GetAllByExAsync(x => !x.IsDeleted)),
-                Frequencies = _mapper.Map<List<FrequencyListDTO>>(await _unitOfWork.FrequencyRepository.GetAllByExAsync(x => !x.IsDeleted))
+                Frequencies = _mapper.Map<List<FrequencyListDTO>>(await _unitOfWork.FrequencyRepository.GetAllByExAsync(x => !x.IsDeleted)),
             };
         }
 

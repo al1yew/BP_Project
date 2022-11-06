@@ -57,9 +57,9 @@ namespace BP.Service.Mappings
                 .ForPath(des => des.Frequency, src => src.MapFrom(x => x.Frequency));
 
             CreateMap<Assessment, AssessmentGetDTO>();
-                //.ForPath(des => des.Distance, src => src.MapFrom(x => x.Distance))
-                //.ForPath(des => des.Weight, src => src.MapFrom(x => x.Weight))
-                //.ForPath(des => des.Frequency, src => src.MapFrom(x => x.Frequency));
+            //.ForPath(des => des.Distance, src => src.MapFrom(x => x.Distance))
+            //.ForPath(des => des.Weight, src => src.MapFrom(x => x.Weight))
+            //.ForPath(des => des.Frequency, src => src.MapFrom(x => x.Frequency));
 
             #endregion
         }

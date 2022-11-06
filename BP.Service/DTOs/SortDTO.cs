@@ -10,5 +10,7 @@ namespace BP.Service.DTOs
         public int FrequencyId { get; set; }
         public int DistanceId { get; set; }
         public int NeedToAssess { get; set; }
+        public int ShowCount { get; set; }
+        public int Page { get; set; }
     }
 }
