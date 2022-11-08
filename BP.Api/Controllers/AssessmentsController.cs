@@ -65,12 +65,5 @@ namespace BP.Api.Controllers
 
             return Ok(await _assessmentService.Get(sortDTO));
         }
-
-        [HttpGet]
-        [Route("getnese")]
-        public async Task<IActionResult> GetNese()
-        {
-            return Content("Salam ihsledi");
-        }
     }
 }

@@ -14,6 +14,7 @@ namespace BP.Data
         private readonly DistanceRepository _distanceRepository;
         private readonly FrequencyRepository _frequencyRepository;
         private readonly AssessmentRepository _assessmentRepository;
+        private readonly AppUserRepository _appUserRepository;
         private readonly AppDbContext _context;
 
         public UnitOfWork(AppDbContext context)
@@ -25,7 +26,7 @@ namespace BP.Data
         public IDistanceRepository DistanceRepository => _distanceRepository != null ? _distanceRepository : new DistanceRepository(_context);
         public IFrequencyRepository FrequencyRepository => _frequencyRepository != null ? _frequencyRepository : new FrequencyRepository(_context);
         public IAssessmentRepository AssessmentRepository => _assessmentRepository != null ? _assessmentRepository : new AssessmentRepository(_context);
-
+        public IAppUserRepository AppUserRepository => _appUserRepository != null ? _appUserRepository : new AppUserRepository(_context);
 
 
         public int Commit()

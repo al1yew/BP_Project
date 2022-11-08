@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BP.Core.Entities;
+using BP.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 using System;
@@ -12,20 +14,20 @@ namespace BP.Api.Extensions
     {
         public static void IdentityBuilder(this IServiceCollection services)
         {
-            //services.AddIdentity<AppUser, IdentityRole>(options =>
-            //{
-            //    options.User.RequireUniqueEmail = true;
-            //    options.Password.RequireDigit = true;
-            //    options.Password.RequiredLength = 8;
-            //    options.Password.RequireUppercase = true;
-            //    options.Password.RequireLowercase = true;
-            //    options.Password.RequireNonAlphanumeric = false;
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = false;
 
-            //    options.Lockout.AllowedForNewUsers = true;
-            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            //    options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
 
-            //}).AddDefaultTokenProviders().AddEntityFrameworkStores<AppDbContext>();
+            }).AddDefaultTokenProviders().AddEntityFrameworkStores<AppDbContext>();
 
         }
     }

@@ -12,6 +12,7 @@ namespace BP.Core
         IDistanceRepository DistanceRepository { get; }
         IFrequencyRepository FrequencyRepository { get; }
         IAssessmentRepository AssessmentRepository { get; }
+        IAppUserRepository AppUserRepository { get; }
         Task<int> CommitAsync();
         int Commit();
     }

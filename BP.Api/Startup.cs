@@ -13,6 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace BP.Api
 {
@@ -42,7 +45,9 @@ namespace BP.Api
 
             services.FluentValidatorBuilder();
 
-            //services.IdentityBuilder();
+            services.IdentityBuilder();
+
+            services.AddAuth(Configuration);
 
             services.AddDbContext<AppDbContext>(options =>
             {
@@ -68,11 +73,11 @@ namespace BP.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
             app.UseCors("BP_RISK_ASSESSMENT");
-
-            //app.UseAuthentication();
-
-            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
