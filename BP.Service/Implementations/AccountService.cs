@@ -3,6 +3,7 @@ using BP.Core.Entities;
 using BP.Service.DTOs.AccountDTOs;
 using BP.Service.Exceptions;
 using BP.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
