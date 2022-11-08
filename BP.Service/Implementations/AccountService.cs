@@ -20,14 +20,12 @@ namespace BP.Service.Implementations
     public class AccountService : IAccountService
     {
         private readonly UserManager<AppUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
         private IConfiguration Configuration { get; }
 
-        public AccountService(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper, IConfiguration configuration)
+        public AccountService(UserManager<AppUser> userManager, IMapper mapper, IConfiguration configuration)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _mapper = mapper;
             Configuration = configuration;
         }

@@ -1,6 +1,7 @@
 ﻿using BP.Service.DTOs;
 using BP.Service.DTOs.AssessmentDTOs;
 using BP.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace BP.Api.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class AssessmentsController : ControllerBase
     {
         private readonly IAssessmentService _assessmentService;
