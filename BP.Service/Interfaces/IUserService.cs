@@ -12,6 +12,8 @@ namespace BP.Service.Interfaces
 
         Task<UserGetDTO> GetById(string id);
 
+        Task<UserGetDTO> GetByName(string username);
+
         Task CreateAsync(UserPostDTO userPostDTO);
 
         Task UpdateAsync(string id, UserPutDTO userPutDTO);

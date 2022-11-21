@@ -35,6 +35,13 @@ namespace BP.Api.Controllers
             return Ok(await _userService.GetById(id));
         }
 
+        [HttpGet]
+        [Route("getbyname")]
+        public async Task<IActionResult> GetByName(string username)
+        {
+            return Ok(await _userService.GetByName(username));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(UserPostDTO userPostDTO)
         {

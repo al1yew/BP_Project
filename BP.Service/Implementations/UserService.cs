@@ -41,6 +41,16 @@ namespace BP.Service.Implementations
             return _mapper.Map<UserGetDTO>(appUser);
         }
 
+        public async Task<UserGetDTO> GetByName(string username)
+        {
+            AppUser appUser = await _userManager.FindByNameAsync(username);
+
+            if (appUser == null)
+                throw new NotFoundException($"User cannot be found by username = {username}");
+
+            return _mapper.Map<UserGetDTO>(appUser);
+        }
+
         public async Task CreateAsync(UserPostDTO userPostDTO)
         {
             AppUser appUser = _mapper.Map<AppUser>(userPostDTO);
