@@ -12,7 +12,6 @@ namespace BP.Api.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
-    [Authorize(Roles = "SuperAdmin, Admin")]
     public class AssessmentsController : ControllerBase
     {
         private readonly IAssessmentService _assessmentService;
@@ -43,6 +42,14 @@ namespace BP.Api.Controllers
         }
 
         [HttpPost]
+        [Route("makeassessment")]
+        public async Task<IActionResult> MakeAssessment(MakeAssessmentDTO makeAssessmentDTO)
+        {
+            return Ok(await _assessmentService.MakeAssessment(makeAssessmentDTO));
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Post(AssessmentPostDTO assessmentPostDTO)
         {
             await _assessmentService.CreateAsync(assessmentPostDTO);
@@ -52,6 +59,7 @@ namespace BP.Api.Controllers
 
         [HttpPut]
         [Route("{id?}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Put(int? id, AssessmentPutDTO assessmentPutDTO)
         {
             await _assessmentService.UpdateAsync(id, assessmentPutDTO);
@@ -61,6 +69,7 @@ namespace BP.Api.Controllers
 
         [HttpDelete]
         [Route("{id?}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Delete(int? id, [FromQuery] SortDTO sortDTO)
         {
             await _assessmentService.DeleteAsync(id);

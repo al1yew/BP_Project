@@ -11,7 +11,6 @@ namespace BP.Api.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
-    [Authorize(Roles = "SuperAdmin, Admin")]
     public class FrequenciesController : ControllerBase
     {
         private readonly IFrequencyService _frequencyService;
@@ -35,6 +34,7 @@ namespace BP.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Post(FrequencyPostDTO frequencyPostDTO)
         {
             await _frequencyService.CreateAsync(frequencyPostDTO);
@@ -44,6 +44,7 @@ namespace BP.Api.Controllers
 
         [HttpPut]
         [Route("{id?}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Put(int? id, FrequencyPutDTO frequencyPutDTO)
         {
             await _frequencyService.UpdateAsync(id, frequencyPutDTO);
@@ -53,6 +54,7 @@ namespace BP.Api.Controllers
 
         [HttpDelete]
         [Route("{id?}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             await _frequencyService.DeleteAsync(id);

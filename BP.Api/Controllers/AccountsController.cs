@@ -34,15 +34,7 @@ namespace BP.Api.Controllers
         public async Task<IActionResult> Register(RegisterDTO registerDTO)
         {
             return Ok(await _accountService.Register(registerDTO));
-        }
-
-        [HttpPost]
-        [Route("createadmin")]
-        public async Task<IActionResult> CreateAdmin(RegisterDTO registerDTO)
-        {
-            await _accountService.CreateAdmin(registerDTO);
-
-            return Ok();
+            //etot action poka shto ne ispolzuyetsa, prosto na budusheye sebe napisal. tut ispolzuyem tolko login i createtoken
         }
 
         [HttpPost]

@@ -4,6 +4,7 @@ using BP.Service.DTOs.AccountDTOs;
 using BP.Service.DTOs.AssessmentDTOs;
 using BP.Service.DTOs.DistanceDTOs;
 using BP.Service.DTOs.FrequencyDTOs;
+using BP.Service.DTOs.UserDTOs;
 using BP.Service.DTOs.WeightDTOs;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace BP.Service.Mappings
 
             #endregion
 
-            #region Distance
+            #region Frequency
 
             CreateMap<FrequencyPostDTO, Frequency>()
                 .ForMember(des => des.CreatedAt, src => src.MapFrom(x => DateTime.UtcNow.AddHours(4)));
@@ -67,6 +68,12 @@ namespace BP.Service.Mappings
             #region AppUser
 
             CreateMap<RegisterDTO, AppUser>();
+
+            CreateMap<UserPostDTO, AppUser>();
+
+            CreateMap<AppUser, UserGetDTO>();
+
+            CreateMap<AppUser, UserListDTO>();
 
             #endregion
         }

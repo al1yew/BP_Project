@@ -20,6 +20,7 @@ namespace BP.Api.Extensions
             services.AddScoped<IFrequencyService, FrequencyService>();
             services.AddScoped<IAssessmentService, AssessmentService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

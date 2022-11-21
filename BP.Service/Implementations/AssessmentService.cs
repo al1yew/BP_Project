@@ -95,6 +95,25 @@ namespace BP.Service.Implementations
             };
         }
 
+        public async Task<int> MakeAssessment(MakeAssessmentDTO makeAssessmentDTO)
+        {
+            if (!await _unitOfWork.WeightRepository.IsExistAsync(x => x.Id == makeAssessmentDTO.WeightId))
+                throw new NotFoundException($"Choose existing weight!");
+
+            if (!await _unitOfWork.DistanceRepository.IsExistAsync(x => x.Id == makeAssessmentDTO.DistanceId))
+                throw new NotFoundException($"Choose existing distance!");
+
+            if (!await _unitOfWork.FrequencyRepository.IsExistAsync(x => x.Id == makeAssessmentDTO.FrequencyId))
+                throw new NotFoundException($"Choose existing frequency!");
+
+            Assessment assessment = await _unitOfWork.AssessmentRepository.GetAsync(x => x.FrequencyId == makeAssessmentDTO.FrequencyId && x.WeightId == makeAssessmentDTO.WeightId && x.DistanceId == makeAssessmentDTO.DistanceId);
+
+            if (assessment == null)
+                throw new NotFoundException("Assessment cannot be found!");
+
+            return assessment.NeedToAssess ? 1 : 0;
+        }
+
         public async Task CreateAsync(AssessmentPostDTO assessmentPostDTO)
         {
             if (await _unitOfWork.AssessmentRepository.IsExistAsync(x =>

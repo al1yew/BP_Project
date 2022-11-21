@@ -11,6 +11,5 @@ namespace BP.Service.Interfaces
     {
         Task<UserDTO> Login(LoginDTO loginDTO);
         Task<UserDTO> Register(RegisterDTO registerDTO);
-        Task CreateAdmin(RegisterDTO registerDTO);
     }
 }

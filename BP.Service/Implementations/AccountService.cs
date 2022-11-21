@@ -74,23 +74,8 @@ namespace BP.Service.Implementations
                 UserName = registerDTO.UserName,
                 Token = await GenerateToken(appUser)
             };
-        }
 
-        public async Task CreateAdmin(RegisterDTO registerDTO)
-        {
-            AppUser appUser = _mapper.Map<AppUser>(registerDTO);
-
-            IdentityResult result = await _userManager.CreateAsync(appUser, registerDTO.Password);
-
-            if (!result.Succeeded)
-            {
-                foreach (IdentityError error in result.Errors)
-                {
-                    throw new BadRequestException(error.Description);
-                }
-            }
-
-            result = await _userManager.AddToRoleAsync(appUser, "Admin");
+            //etot action poka shto ne ispolzuyetsa, prosto na budusheye sebe napisal. tut ispolzuyem tolko login i createtoken
         }
 
         public async Task<string> GenerateToken(AppUser appUser)

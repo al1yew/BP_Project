@@ -15,6 +15,8 @@ namespace BP.Service.Interfaces
 
         Task<AllDataDTO> GetAllData();
 
+        Task<int> MakeAssessment(MakeAssessmentDTO makeAssessmentDTO);
+
         Task<AssessmentObjectDTO> Get(SortDTO sortDTO);
 
         Task CreateAsync(AssessmentPostDTO assessmentPostDTO);

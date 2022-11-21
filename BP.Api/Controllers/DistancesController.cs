@@ -11,7 +11,6 @@ namespace BP.Api.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
-    [Authorize(Roles = "SuperAdmin, Admin")]
     public class DistancesController : ControllerBase
     {
         private readonly IDistanceService _distanceService;
@@ -35,6 +34,7 @@ namespace BP.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Post(DistancePostDTO distancePostDTO)
         {
             await _distanceService.CreateAsync(distancePostDTO);
@@ -44,6 +44,7 @@ namespace BP.Api.Controllers
 
         [HttpPut]
         [Route("{id?}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Put(int? id, DistancePutDTO distancePutDTO)
         {
             await _distanceService.UpdateAsync(id, distancePutDTO);
@@ -53,6 +54,7 @@ namespace BP.Api.Controllers
 
         [HttpDelete]
         [Route("{id?}")]
+        [Authorize(Roles = "SuperAdmin, Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             await _distanceService.DeleteAsync(id);
