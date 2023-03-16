@@ -30,7 +30,8 @@ namespace BP.Service.Implementations
 
         public async Task<AssessmentObjectDTO> Get(SortDTO sortDTO)
         {
-            List<AssessmentListDTO> assessments = _mapper.Map<List<AssessmentListDTO>>(await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
+            List<AssessmentListDTO> assessments = _mapper.Map<List<AssessmentListDTO>>
+                (await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
 
             IQueryable<AssessmentListDTO> query = assessments.AsQueryable();
 
