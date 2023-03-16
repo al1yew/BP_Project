@@ -107,7 +107,10 @@ namespace BP.Service.Implementations
             if (!await _unitOfWork.FrequencyRepository.IsExistAsync(x => x.Id == makeAssessmentDTO.FrequencyId))
                 throw new NotFoundException($"Choose existing frequency!");
 
-            Assessment assessment = await _unitOfWork.AssessmentRepository.GetAsync(x => x.FrequencyId == makeAssessmentDTO.FrequencyId && x.WeightId == makeAssessmentDTO.WeightId && x.DistanceId == makeAssessmentDTO.DistanceId);
+            Assessment assessment = await _unitOfWork.AssessmentRepository.GetAsync(x =>
+            x.FrequencyId == makeAssessmentDTO.FrequencyId &&
+            x.WeightId == makeAssessmentDTO.WeightId &&
+            x.DistanceId == makeAssessmentDTO.DistanceId);
 
             if (assessment == null)
                 throw new NotFoundException("Assessment cannot be found!");
