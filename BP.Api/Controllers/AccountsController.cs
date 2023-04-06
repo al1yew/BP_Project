@@ -1,5 +1,7 @@
-﻿using BP.Service.DTOs.AccountDTOs;
+﻿using BP.Core.Entities;
+using BP.Service.DTOs.AccountDTOs;
 using BP.Service.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,10 +12,13 @@ namespace BP.Api.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly IAccountService _accountService;
-
-        public AccountsController(IAccountService accountService)
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public AccountsController(IAccountService accountService, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _accountService = accountService;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         [HttpPost]
@@ -33,62 +38,61 @@ namespace BP.Api.Controllers
 
 
 
+        #region Created Roles
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //[Route("create")]
-        //public async Task<IActionResult> Create()
+        //[Route("createroles")]
+        //public async Task<IActionResult> CreateRoles()
         //{
-        //    await _roleManager.CreateAsync(new IdentityRole { Name = "SuperAdmin" });
         //    await _roleManager.CreateAsync(new IdentityRole { Name = "Admin" });
         //    await _roleManager.CreateAsync(new IdentityRole { Name = "Member" });
 
-        //    AppUser appUser = new AppUser
-        //    {
-        //        Name = "Vasif",
-        //        Surname = "Aliyev",
-        //        UserName = "SuperAdmin",
-        //        Email = "admin@admin"
-        //    };
-
-        //    IdentityResult identityResult = await _userManager.CreateAsync(appUser, "Admin123");
-
-        //    await _userManager.AddToRoleAsync(appUser, "SuperAdmin");
-
-        //    return Content("yaratdiq superadmini");
+        //    return Content("Salammmmm");
         //}
 
-        //[Route("create")]
-        //public async Task<IActionResult> Create()
+        #endregion
+
+        #region Created Admin
+
+        //[Route("createadmin")]
+        //public async Task<IActionResult> CreateAdmin()
         //{
         //    AppUser appUser = new AppUser
         //    {
         //        Name = "Vasif",
         //        Surname = "Aliyev",
-        //        UserName = "vasifaliyev",
-        //        Email = "vasifja@code.edu.az"
+        //        UserName = "Vasif1",
+        //        Email = "admin@admin"
         //    };
 
-        //    IdentityResult identityResult = await _userManager.CreateAsync(appUser, "SalamBaku123");
+        //    await _userManager.CreateAsync(appUser, "Admin123");
 
-        //    await _userManager.AddToRoleAsync(appUser, "Member");
+        //    await _userManager.AddToRoleAsync(appUser, "Admin");
 
-        //    return Content("yaratdiq memberi");
+        //    return Content("Admin est ");
         //}
+
+        #endregion
+
+        #region Created Kamran
+
+        //[Route("createkamran")]
+        //public async Task<IActionResult> CreateKamran()
+        //{
+        //    AppUser appUser = new AppUser
+        //    {
+        //        Name = "Kamran",
+        //        Surname = "Amirli",
+        //        UserName = "Kamran1",
+        //        Email = "kamran@kamran"
+        //    };
+
+        //    await _userManager.CreateAsync(appUser, "Admin123");
+
+        //    await _userManager.AddToRoleAsync(appUser, "Admin");
+
+        //    return Content("Kamran est ");
+        //}
+
+        #endregion
     }
 }
