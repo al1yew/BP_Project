@@ -12,11 +12,8 @@ namespace BP.Api.Extensions
     {
         public static void FluentValidatorBuilder(this IServiceCollection services)
         {
-            services.AddFluentValidation(options =>
-            {
-                options.RegisterValidatorsFromAssemblyContaining<WeightPostDTOValidator>();
-                options.DisableDataAnnotationsValidation = true;
-            });
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
         }
     }
 }

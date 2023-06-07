@@ -8,7 +8,7 @@ namespace BP.Api.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
-    [Authorize(Roles = "SuperAdmin, Admin")]
+    [Authorize(Roles = "Admin")]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;

@@ -5,16 +5,16 @@ using System.Text;
 
 namespace BP.Service.DTOs.AssessmentDTOs
 {
-    public class MakeAssessmentDTO
+    public class CheckAssessmentDTO
     {
         public int WeightId { get; set; }
         public int FrequencyId { get; set; }
         public int DistanceId { get; set; }
     }
 
-    public class MakeAssessmentDTOValidator : AbstractValidator<MakeAssessmentDTO>
+    public class CheckAssessmentDTOValidator : AbstractValidator<CheckAssessmentDTO>
     {
-        public MakeAssessmentDTOValidator()
+        public CheckAssessmentDTOValidator()
         {
             RuleFor(x => x.DistanceId).NotEmpty().WithMessage("Select distance!");
             RuleFor(x => x.FrequencyId).NotEmpty().WithMessage("Select frequency!");

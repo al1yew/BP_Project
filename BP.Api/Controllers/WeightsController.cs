@@ -35,7 +35,7 @@ namespace BP.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(WeightPostDTO weightPostDTO)
         {
             await _weightService.CreateAsync(weightPostDTO);
@@ -45,7 +45,7 @@ namespace BP.Api.Controllers
 
         [HttpPut]
         [Route("{id?}")]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(int? id, WeightPutDTO weightPutDTO)
         {
             await _weightService.UpdateAsync(id, weightPutDTO);
@@ -55,7 +55,7 @@ namespace BP.Api.Controllers
 
         [HttpDelete]
         [Route("{id?}")]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             await _weightService.DeleteAsync(id);

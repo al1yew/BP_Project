@@ -1,11 +1,7 @@
-﻿using BP.Service.DTOs;
-using BP.Service.DTOs.AssessmentDTOs;
+﻿using BP.Service.DTOs.AssessmentDTOs;
 using BP.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BP.Api.Controllers
@@ -21,10 +17,16 @@ namespace BP.Api.Controllers
             _assessmentService = assessmentService;
         }
 
+        //[HttpGet]
+        //public async Task<IActionResult> Get([FromQuery] SortDTO sortDTO)
+        //{
+        //    return Ok(await _assessmentService.Get(sortDTO));
+        //}
+
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] SortDTO sortDTO)
+        public async Task<IActionResult> Get()
         {
-            return Ok(await _assessmentService.Get(sortDTO));
+            return Ok(await _assessmentService.Get());
         }
 
         [HttpGet]
@@ -34,22 +36,22 @@ namespace BP.Api.Controllers
             return Ok(await _assessmentService.GetById(id));
         }
 
-        [HttpGet]
-        [Route("getalldata")]
-        public async Task<IActionResult> GetAllData()
+        //[HttpGet]
+        //[Route("getalldata")]
+        //public async Task<IActionResult> GetAllData()
+        //{
+        //    return Ok(await _assessmentService.GetAllData());
+        //}
+
+        [HttpPost]
+        [Route("checkassessment")]
+        public async Task<IActionResult> CheckAssessment(CheckAssessmentDTO checkAssessmentDTO)
         {
-            return Ok(await _assessmentService.GetAllData());
+            return Ok(await _assessmentService.CheckAssessment(checkAssessmentDTO));
         }
 
         [HttpPost]
-        [Route("makeassessment")]
-        public async Task<IActionResult> MakeAssessment(MakeAssessmentDTO makeAssessmentDTO)
-        {
-            return Ok(await _assessmentService.MakeAssessment(makeAssessmentDTO));
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(AssessmentPostDTO assessmentPostDTO)
         {
             await _assessmentService.CreateAsync(assessmentPostDTO);
@@ -59,7 +61,7 @@ namespace BP.Api.Controllers
 
         [HttpPut]
         [Route("{id?}")]
-        [Authorize(Roles = "SuperAdmin, Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(int? id, AssessmentPutDTO assessmentPutDTO)
         {
             await _assessmentService.UpdateAsync(id, assessmentPutDTO);
@@ -69,12 +71,10 @@ namespace BP.Api.Controllers
 
         [HttpDelete]
         [Route("{id?}")]
-        [Authorize(Roles = "SuperAdmin, Admin")]
-        public async Task<IActionResult> Delete(int? id, [FromQuery] SortDTO sortDTO)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int? id)
         {
-            await _assessmentService.DeleteAsync(id);
-
-            return Ok(await _assessmentService.Get(sortDTO));
+            return Ok(await _assessmentService.DeleteAsync(id));
         }
     }
 }

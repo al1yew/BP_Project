@@ -8,11 +8,7 @@ using BP.Service.DTOs.FrequencyDTOs;
 using BP.Service.DTOs.WeightDTOs;
 using BP.Service.Exceptions;
 using BP.Service.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BP.Service.Implementations
@@ -28,53 +24,81 @@ namespace BP.Service.Implementations
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<AssessmentObjectDTO> Get(SortDTO sortDTO)
+        public async Task<AssessmentDTO> Get()
         {
-            List<AssessmentListDTO> assessments = _mapper.Map<List<AssessmentListDTO>>
-                (await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
+            List<DistanceListDTO> distances = _mapper.Map<List<DistanceListDTO>>(await _unitOfWork.DistanceRepository.GetAllByExAsync(x => !x.IsDeleted));
+            List<FrequencyListDTO> frequencies = _mapper.Map<List<FrequencyListDTO>>(await _unitOfWork.FrequencyRepository.GetAllByExAsync(x => !x.IsDeleted));
+            List<WeightListDTO> weights = _mapper.Map<List<WeightListDTO>>(await _unitOfWork.WeightRepository.GetAllByExAsync(x => !x.IsDeleted));
 
-            IQueryable<AssessmentListDTO> query = assessments.AsQueryable();
-
-            if (sortDTO.WeightId > 0)
+            return new AssessmentDTO()
             {
-                query = query.Where(x => x.WeightId == sortDTO.WeightId);
-            }
-
-            if (sortDTO.DistanceId > 0)
-            {
-                query = query.Where(x => x.DistanceId == sortDTO.DistanceId);
-            }
-
-            if (sortDTO.FrequencyId > 0)
-            {
-                query = query.Where(x => x.FrequencyId == sortDTO.FrequencyId);
-            }
-
-            if (sortDTO.NeedToAssess == 1)
-            {
-                query = query.Where(x => x.NeedToAssess);
-            }
-            else if (sortDTO.NeedToAssess == 2)
-            {
-                query = query.Where(x => !x.NeedToAssess);
-            }
-
-            if (sortDTO.Page == 0)
-            {
-                sortDTO.Page = 1;
-            }
-
-            if (sortDTO.ShowCount == 0)
-            {
-                sortDTO.ShowCount = 10;
-            }
-
-            return new AssessmentObjectDTO()
-            {
-                Query = query.Skip((sortDTO.Page * sortDTO.ShowCount) - sortDTO.ShowCount).Take(sortDTO.ShowCount),
-                TotalCount = query.Count()
+                Assessments = _mapper.Map<List<AssessmentListDTO>>(await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency")),
+                Options = new AllDataDTO
+                {
+                    Distances = distances,
+                    Frequencies = frequencies,
+                    Weights = weights
+                }
             };
         }
+
+        //public async Task<AssessmentObjectDTO> Get(SortDTO sortDTO)
+        //{
+        //    List<AssessmentListDTO> assessments = _mapper.Map<List<AssessmentListDTO>>
+        //        (await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
+
+        //    IQueryable<AssessmentListDTO> query = assessments.AsQueryable();
+
+        //    if (sortDTO.WeightId > 0)
+        //    {
+        //        query = query.Where(x => x.WeightId == sortDTO.WeightId);
+        //    }
+
+        //    if (sortDTO.DistanceId > 0)
+        //    {
+        //        query = query.Where(x => x.DistanceId == sortDTO.DistanceId);
+        //    }
+
+        //    if (sortDTO.FrequencyId > 0)
+        //    {
+        //        query = query.Where(x => x.FrequencyId == sortDTO.FrequencyId);
+        //    }
+
+        //    if (sortDTO.NeedToAssess == 1)
+        //    {
+        //        query = query.Where(x => x.NeedToAssess);
+        //    }
+        //    else if (sortDTO.NeedToAssess == 2)
+        //    {
+        //        query = query.Where(x => !x.NeedToAssess);
+        //    }
+
+        //    if (sortDTO.Page == 0)
+        //    {
+        //        sortDTO.Page = 1;
+        //    }
+
+        //    if (sortDTO.ShowCount == 0)
+        //    {
+        //        sortDTO.ShowCount = 10;
+        //    }
+
+        //    return new AssessmentObjectDTO()
+        //    {
+        //        Query = query.Skip((sortDTO.Page * sortDTO.ShowCount) - sortDTO.ShowCount).Take(sortDTO.ShowCount),
+        //        TotalCount = query.Count()
+        //    };
+        //}
+
+        //public async Task<AllDataDTO> GetAllData()
+        //{
+        //    return new AllDataDTO()
+        //    {
+        //        Distances = _mapper.Map<List<DistanceListDTO>>(await _unitOfWork.DistanceRepository.GetAllByExAsync(x => !x.IsDeleted)),
+        //        Weights = _mapper.Map<List<WeightListDTO>>(await _unitOfWork.WeightRepository.GetAllByExAsync(x => !x.IsDeleted)),
+        //        Frequencies = _mapper.Map<List<FrequencyListDTO>>(await _unitOfWork.FrequencyRepository.GetAllByExAsync(x => !x.IsDeleted)),
+        //    };
+        //}
 
         public async Task<AssessmentGetDTO> GetById(int? id)
         {
@@ -86,36 +110,26 @@ namespace BP.Service.Implementations
             return _mapper.Map<AssessmentGetDTO>(assessment);
         }
 
-        public async Task<AllDataDTO> GetAllData()
+        public async Task<int> CheckAssessment(CheckAssessmentDTO checkAssessmentDTO)
         {
-            return new AllDataDTO()
-            {
-                Distances = _mapper.Map<List<DistanceListDTO>>(await _unitOfWork.DistanceRepository.GetAllByExAsync(x => !x.IsDeleted)),
-                Weights = _mapper.Map<List<WeightListDTO>>(await _unitOfWork.WeightRepository.GetAllByExAsync(x => !x.IsDeleted)),
-                Frequencies = _mapper.Map<List<FrequencyListDTO>>(await _unitOfWork.FrequencyRepository.GetAllByExAsync(x => !x.IsDeleted)),
-            };
-        }
-
-        public async Task<int> MakeAssessment(MakeAssessmentDTO makeAssessmentDTO)
-        {
-            if (!await _unitOfWork.WeightRepository.IsExistAsync(x => x.Id == makeAssessmentDTO.WeightId))
+            if (!await _unitOfWork.WeightRepository.IsExistAsync(x => x.Id == checkAssessmentDTO.WeightId))
                 throw new NotFoundException($"Choose existing weight!");
 
-            if (!await _unitOfWork.DistanceRepository.IsExistAsync(x => x.Id == makeAssessmentDTO.DistanceId))
+            if (!await _unitOfWork.DistanceRepository.IsExistAsync(x => x.Id == checkAssessmentDTO.DistanceId))
                 throw new NotFoundException($"Choose existing distance!");
 
-            if (!await _unitOfWork.FrequencyRepository.IsExistAsync(x => x.Id == makeAssessmentDTO.FrequencyId))
+            if (!await _unitOfWork.FrequencyRepository.IsExistAsync(x => x.Id == checkAssessmentDTO.FrequencyId))
                 throw new NotFoundException($"Choose existing frequency!");
 
             Assessment assessment = await _unitOfWork.AssessmentRepository.GetAsync(x =>
-            x.FrequencyId == makeAssessmentDTO.FrequencyId &&
-            x.WeightId == makeAssessmentDTO.WeightId &&
-            x.DistanceId == makeAssessmentDTO.DistanceId);
+            x.FrequencyId == checkAssessmentDTO.FrequencyId &&
+            x.WeightId == checkAssessmentDTO.WeightId &&
+            x.DistanceId == checkAssessmentDTO.DistanceId);
 
             if (assessment == null)
                 throw new NotFoundException("Assessment cannot be found!");
 
-            return assessment.NeedToAssess ? 1 : 0;
+            return assessment.NeedToAssess ? 2 : 1;
         }
 
         public async Task CreateAsync(AssessmentPostDTO assessmentPostDTO)
@@ -178,7 +192,7 @@ namespace BP.Service.Implementations
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task DeleteAsync(int? id)
+        public async Task<List<AssessmentListDTO>> DeleteAsync(int? id)
         {
             if (id == null)
                 throw new BadRequestException($"Id is null!");
@@ -190,6 +204,9 @@ namespace BP.Service.Implementations
 
             _unitOfWork.AssessmentRepository.Remove(dbAssessment);
             await _unitOfWork.CommitAsync();
+
+            return _mapper.Map<List<AssessmentListDTO>>(await _unitOfWork.AssessmentRepository.GetAllAsync("Weight", "Distance", "Frequency"));
+
         }
     }
 }

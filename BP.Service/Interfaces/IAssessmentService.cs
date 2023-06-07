@@ -13,16 +13,17 @@ namespace BP.Service.Interfaces
 
         Task<AssessmentGetDTO> GetById(int? id);
 
-        Task<AllDataDTO> GetAllData();
+        //Task<AllDataDTO> GetAllData();
+        Task<AssessmentDTO> Get(); //new
 
-        Task<int> MakeAssessment(MakeAssessmentDTO makeAssessmentDTO);
+        Task<int> CheckAssessment(CheckAssessmentDTO checkAssessmentDTO);
 
-        Task<AssessmentObjectDTO> Get(SortDTO sortDTO);
+        //Task<AssessmentObjectDTO> Get(SortDTO sortDTO);
 
         Task CreateAsync(AssessmentPostDTO assessmentPostDTO);
 
         Task UpdateAsync(int? id, AssessmentPutDTO assessmentPutDTO);
 
-        Task DeleteAsync(int? id);
+        Task<List<AssessmentListDTO>> DeleteAsync(int? id);
     }
 }

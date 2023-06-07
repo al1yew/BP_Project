@@ -28,7 +28,7 @@ namespace BP.Service.Implementations
 
         public async Task<List<UserListDTO>> GetAllAsync(string username)
         {
-            return _mapper.Map<List<UserListDTO>>(await _unitOfWork.AppUserRepository.GetAllByExAsync(x => x.UserName != username && x.NormalizedUserName != "SUPERADMIN"));
+            return _mapper.Map<List<UserListDTO>>(await _unitOfWork.AppUserRepository.GetAllByExAsync(x => x.UserName != username));
         }
 
         public async Task<UserGetDTO> GetById(string id)
