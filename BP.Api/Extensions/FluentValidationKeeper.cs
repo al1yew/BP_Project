@@ -1,10 +1,7 @@
 ﻿using BP.Service.DTOs.WeightDTOs;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BP.Api.Extensions
 {
@@ -14,6 +11,7 @@ namespace BP.Api.Extensions
         {
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
+            services.AddValidatorsFromAssemblyContaining<WeightPostDTO>();
         }
     }
 }
